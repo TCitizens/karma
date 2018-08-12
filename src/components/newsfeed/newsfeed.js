@@ -1,31 +1,36 @@
-import React from 'react';
-import { Feed } from 'semantic-ui-react'
+import React from "react";
+import AddActivity from "../addActivity/addActivity";
+import { WEBSOCKET_SERVER } from "../../util/socket";
+import io from "socket.io-client";
 import Bullbasaur from '../../assets/bullbasaur.png'
 import Snorlax from '../../assets/snorlax.png'
 import Pikachu from '../../assets/pikachu.png'
 import { StyleSheet, css } from 'aphrodite';
-
-
+import {Feed} from 'semantic-ui-react';
 
 class NewsFeed extends React.Component {
-
-  constructor(){
-    super();
-    this.state = {activities: []}
-  }
-  // state = {
-  //   activities: []
-  // }
+  state = {
+    activities: []
+  };
   componentDidMount() {
     const socket = io(WEBSOCKET_SERVER);
     socket.on("karma-activity", this.processActivities);
   }
 
-  processActivities = activity =>  {
+  processActivities = activity => {
     //TO BE FILLED IN
     // this.setState({activities: [...this.state.activities, activity]})
-    console.log('this is an activity', activity)
-  }
+    debugger
+    let newActivity = {
+      username: this.props.currentUser,
+      avatar: '',
+      activityValue: activity.activityValue,
+      event_: activity.activity,
+      date: '7:00 Saturday, August 11'
+    }
+    this.props.postNewActivity(newActivity);
+    console.log("this is an activity", activity);
+  };
 
   render() {
     const {currentUser, activities} = this.props;
@@ -64,7 +69,7 @@ class NewsFeed extends React.Component {
       <div className={css(styles.newsFeedContainer)}>
         ----NEWSFEED----
         <Feed events={events} />
-        <AddActivity />
+        <AddActivity username={currentUser}/>
       </div>
     )
   }
@@ -77,9 +82,3 @@ const styles = StyleSheet.create({
 })
 
 export default NewsFeed;
-// const activities = this.props.activities.map(activity => {
-//     username: {activity.username},
-//     avatar: {activity.avatar},
-//     additionalPoints = {activity.additionalPoints},
-//     event_: {activity.event}
-//   })

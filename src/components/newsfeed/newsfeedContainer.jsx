@@ -1,5 +1,7 @@
 import {connect} from 'react-redux';
 import NewsFeed from './newsFeed';
+import {postCurrentUser} from '../actions/currentUserActions';
+import {postNewActivity} from '../actions/activityActions';
 
 const mapStateToProps = (state) => {
   return {
@@ -9,8 +11,10 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    postCurrentUser: (id) => dispatch(postCurrentUser(id)),
+    postNewActivity: (activity) => dispatch(postNewActivity(activity))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);
-// activites: state.activities
