@@ -7,7 +7,8 @@ const totalReducer = (state = {}, action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_NEW_ACTIVITY:
-      newState = merge({}, state, [action.total.username]: 5);
+      newState = merge({}, state);
+      newState[action.activity.username] += action.activityValue
       return newState;
     default:
       return state;
