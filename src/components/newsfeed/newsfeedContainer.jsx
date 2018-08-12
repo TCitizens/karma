@@ -2,7 +2,10 @@ import {connect} from 'react-redux';
 import NewsFeed from './newsFeed';
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    currentUser: state.currentUser,
+    activites: state.activities
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,27 +1,33 @@
 import React from 'react';
 import { Feed } from 'semantic-ui-react'
+import Bullbasaur from '../../assets/bullbasaur.png'
+import Snorlax from '../../assets/snorlax.png'
+import Pikachu from '../../assets/pikachu.png'
+import { StyleSheet, css } from 'aphrodite';
 
 class NewsFeed extends React.Component {
+
   render() {
+    const {currentUser, activities} = this.props;
     const events = [
   {
     date: '1 Hour Ago',
-    image: 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+    image: Bullbasaur,
     meta: '4 Likes',
-    summary: 'Elliot Fu added you as a friend',
+    summary: 'Bullbasaur volunteered at the pet shelter',
   },
   {
     date: '4 days ago',
-    image: 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg',
+    image: Pikachu,
     meta: '1 Like',
-    summary: 'Helen Troy added 2 new illustrations',
-    extraImages: ['https://react.semantic-ui.com/images/wireframe/image.png', 'https://react.semantic-ui.com/images/wireframe/image.png'],
+    summary: 'Pikachu coached his local youth baseball team',
+    extraImages: ['https://pre00.deviantart.net/328f/th/pre/f/2015/163/7/5/pikachu_baseball_hanshintigers_by_mr_shin-d8x2y58.jpg', 'https://react.semantic-ui.com/images/wireframe/image.png'],
   },
   {
     date: '3 days ago',
-    image: '/images/avatar/small/joe.jpg',
+    image: Snorlax,
     meta: '8 Likes',
-    summary: 'Joe Henderson posted on his page',
+    summary: 'Snorlax picked up trash.. and ate it',
     extraText:
       "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
   },
@@ -35,13 +41,19 @@ class NewsFeed extends React.Component {
   },
 ]
     return (
-      <div>
+      <div className={css(styles.newsFeedContainer)}>
         ----NEWSFEED----
         <Feed events={events} />
       </div>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  newsFeedContainer: {
+    marginLeft: '100px'
+  }
+})
 
 export default NewsFeed;
 // const activities = this.props.activites.map(activity => {
