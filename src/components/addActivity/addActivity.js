@@ -68,11 +68,6 @@ class AddActivity extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    const socket = io(WEBSOCKET_SERVER);
-    socket.on("karma-activity", this.processActivities);
-  }
-
   processActivities() {}
 
   componentWillUnmount() {
