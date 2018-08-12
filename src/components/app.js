@@ -3,7 +3,7 @@ import { Switch, Route} from 'react-router-dom';
 import './app.css';
 import Header from './header/header';
 import newsFeedContainer from './newsfeed/newsFeedContainer';
-import Board from './board/board';
+import BoardContainer from './board/boardContainer';
 
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
         <Header>
           <Switch>
             <Route exact path='/' component={newsFeedContainer}/>
-            <Route exact path='/leaderboard' component={Board}/>
+            <Route exact path='/leaderboard' component={BoardContainer}/>
           </Switch>
         </Header>
       </div>

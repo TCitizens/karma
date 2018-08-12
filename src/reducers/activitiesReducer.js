@@ -3,7 +3,6 @@ import merge from 'lodash/merge';
 
 
 const activitiesReducer = (state = {}, action) => {
-  debugger
   let newState;
   Object.freeze(state);
   switch (action.type) {

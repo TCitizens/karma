@@ -5,51 +5,58 @@ import { StyleSheet, css } from 'aphrodite';
 class Board extends React.Component {
   render() {
     const { totals } = this.props;
-    
+    let totalArr = [];
+
+    for(let user in totals) {
+      totalArr.push([totals[user], user])
+    }
+
+    totalArr = totalArr.sort( (a, b) => {
+      return a[0] - b[0]
+    })
+
+    const allTotals = totalArr.reverse().map((total, idx) => {
+      return (
+        <Table.Row>
+          <Table.Cell>{idx + 1}</Table.Cell>
+          <Table.Cell>{total[1]}</Table.Cell>
+          <Table.Cell>{total[0]}</Table.Cell>
+        </Table.Row>
+      );
+    });
 
     return (
       <div className={css(styles.tableContainer)}>
-        ----leaderboard----
         <div>
-          <Icon name='chess king' size='large' />
+          <Header as='h2' icon textAlign='center'>
+            <Icon name='users' circular />
+            <Header.Content>Leaderboard</Header.Content>
+          </Header>
         </div>
-        <Table celled>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Ranking</Table.HeaderCell>
-        <Table.HeaderCell>User</Table.HeaderCell>
-        <Table.HeaderCell>Points</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
 
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>
-          <Label ribbon><Icon name='digg' size='large' /></Label>
-        </Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-        <Table.Cell>Cell</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-      </div>
-    )
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Ranking</Table.HeaderCell>
+              <Table.HeaderCell>User</Table.HeaderCell>
+              <Table.HeaderCell>Points</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {allTotals}
+          </Table.Body>
+        </Table>
+    </div>
+  );
   }
 }
 
 const styles = StyleSheet.create({
   tableContainer: {
-    marginLeft: '100px'
+    marginTop: '50px',
+    marginLeft: '100px',
+    marginRight: '100px'
   }
 })
 

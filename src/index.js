@@ -8,8 +8,14 @@ import { Provider } from 'react-redux';
 import { configureStore, history } from './store/store';
 import { WEBSOCKET_SERVER } from "./util/socket";
 import io from "socket.io-client";
+import {postNewActivity} from './actions/activityActions';
+
 
 const store = configureStore();
+
+window.dispatch = store.dispatch;
+window.postNewActivity = postNewActivity;
+window.getState = store.getState;
 
 ReactDOM.render(
   <Provider store={store}>
