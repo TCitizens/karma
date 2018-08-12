@@ -1,5 +1,6 @@
 import React from "react";
 import AddActivity from "../addActivity/addActivity";
+import Banner from "../banner/banner";
 import { WEBSOCKET_SERVER } from "../../util/socket";
 import io from "socket.io-client";
 import Bullbasaur from '../../assets/bullbasaur.png'

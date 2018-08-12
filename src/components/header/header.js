@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { StyleSheet, css } from "aphrodite";
 import { connect } from "react-redux";
-import { Icon, Dropdown, Image } from "semantic-ui-react";
+import { Dropdown, Image } from "semantic-ui-react";
 import { selectCurrentUser } from "../../actions/currentUserActions";
 import Navigation from "../navigation/navigation";
 import Snorlax from "../../assets/snorlax.png";
