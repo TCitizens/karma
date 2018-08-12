@@ -73,6 +73,8 @@ class AddActivity extends React.Component {
     socket.on("karma-activity", this.processActivities);
   }
 
+  processActivities() {}
+
   componentWillUnmount() {
     this.setState({
       category: "",
@@ -98,6 +100,7 @@ class AddActivity extends React.Component {
     const { activity, activityValue } = this.state;
     const { currentUser } = this.props;
     const date = new Date(); // change format for reef needs
+    const socket = io(WEBSOCKET_SERVER);
     socket.emit("karma-activity", {
       currentUser,
       activity,
