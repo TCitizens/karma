@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
-import NewsFeed from './newsFeed';
-import {postCurrentUser} from '../actions/currentUserActions';
-import {postNewActivity} from '../actions/activityActions';
+import NewsFeed from './newsfeed';
+import {postCurrentUser} from '../../actions/currentUserActions';
+import {postNewActivity} from '../../actions/activityActions';
 
 const mapStateToProps = (state) => {
   return {

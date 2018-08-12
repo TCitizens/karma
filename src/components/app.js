@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route} from 'react-router-dom';
 import './app.css';
 import Header from './header/header';
-import NewsFeed from './newsfeed/newsfeed';
+import newsFeedContainer from './newsfeed/newsFeedContainer';
 import Board from './board/board';
 
 
@@ -12,7 +12,7 @@ class App extends Component {
       <div className="App">
         <Header>
           <Switch>
-            <Route exact path='/' component={NewsFeed}/>
+            <Route exact path='/' component={newsFeedContainer}/>
             <Route exact path='/leaderboard' component={Board}/>
           </Switch>
         </Header>

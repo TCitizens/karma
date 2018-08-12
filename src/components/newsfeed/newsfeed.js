@@ -33,42 +33,20 @@ class NewsFeed extends React.Component {
   };
 
   render() {
-    const {currentUser, activities} = this.props;
-    const events = [
-  {
-    date: '1 Hour Ago',
-    image: Bullbasaur,
-    meta: '4 Likes',
-    summary: 'Bullbasaur volunteered at the pet shelter',
-  },
-  {
-    date: '4 days ago',
-    image: Pikachu,
-    meta: '1 Like',
-    summary: 'Pikachu coached his local youth baseball team',
-    extraImages: ['https://pre00.deviantart.net/328f/th/pre/f/2015/163/7/5/pikachu_baseball_hanshintigers_by_mr_shin-d8x2y58.jpg', 'https://react.semantic-ui.com/images/wireframe/image.png'],
-  },
-  {
-    date: '3 days ago',
-    image: Snorlax,
-    meta: '8 Likes',
-    summary: 'Snorlax picked up trash.. and ate it',
-    extraText:
-      "Ours is a life of constant reruns. We're always circling back to where we'd we started.",
-  },
-  {
-    date: '4 days ago',
-    image: '/images/avatar/small/justen.jpg',
-    meta: '41 Likes',
-    summary: 'Justen Kitsune added 2 new photos of you',
-    extraText: 'Look at these fun pics I found from a few years ago. Good times.',
-    extraImages: ['/images/wireframe/image.png', '/images/wireframe/image-text.png'],
-  },
-]
+    const {currentUser} = this.props;
+    const activities = this.props.activities.map(activity => {
+      return {
+        username: activity.username,
+        avatar: activity.avatar,
+        activityValue: activity.activityValue,
+        event_: activity.event,
+        date: activity.date
+      };
+  })
     return (
       <div className={css(styles.newsFeedContainer)}>
         ----NEWSFEED----
-        <Feed events={events} />
+        <Feed events={activities} />
         <AddActivity username={currentUser}/>
       </div>
     )
