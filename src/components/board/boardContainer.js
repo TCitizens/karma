@@ -3,8 +3,8 @@ import Board from './board';
 
 const mapStateToProps = (state) => {
   return {
-    totals: Object.values(state.total)
+    totals: state.total
   }
 }
 
-export default connect(mapStateToProps, null)(NewsFeed);
+export default connect(mapStateToProps, null)(Board);
