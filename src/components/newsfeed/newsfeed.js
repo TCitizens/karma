@@ -34,19 +34,22 @@ class NewsFeed extends React.Component {
 
   render() {
     const {currentUser} = this.props;
-    const activities = this.props.activities.map(activity => {
-      return {
-        username: activity.username,
-        avatar: activity.avatar,
-        activityValue: activity.activityValue,
-        event_: activity.event,
-        date: activity.date
-      };
-  })
+    // let locale = "en-us";
+    // let month = date.toLocaleString(locale, {month: "long"});
+    // let day = date.getDate();
+    // let year = date.getFullYear();
+  //   const activities = this.props.activities.map(activity => {
+  //     return {
+  //       username: activity.username,
+  //       avatar: activity.avatar,
+  //       activityValue: activity.activityValue,
+  //       event_: activity.event,
+  //       date: activity.date
+  //     };
+  // })
     return (
       <div className={css(styles.newsFeedContainer)}>
         ----NEWSFEED----
-        <Feed events={activities} />
         <AddActivity username={currentUser}/>
       </div>
     )

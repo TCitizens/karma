@@ -4,6 +4,9 @@ import { StyleSheet, css } from 'aphrodite';
 
 class Board extends React.Component {
   render() {
+    const { totals } = this.props;
+    
+
     return (
       <div className={css(styles.tableContainer)}>
         ----leaderboard----
