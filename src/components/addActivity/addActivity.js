@@ -8,6 +8,10 @@ import {
   Icon,
   Form
 } from "semantic-ui-react";
+import { isObject } from "util";
+import { WEBSOCKET_SERVER } from "../../util/socket";
+import io from "socket.io-client";
+import { StyleSheet, css } from "aphrodite";
 
 const CATEGORIES = [
   { key: "socialWelfare", text: "Social Welfare", value: "socialWelfare" },
@@ -57,11 +61,29 @@ class AddActivity extends React.Component {
     super(props);
     this.state = {
       category: "",
-      activity: ""
+      activity: "",
+      activityValue: 0
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const socket = io(WEBSOCKET_SERVER);
+    socket.on("karma-activity", this.processActivities);
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      category: "",
+      activity: ""
+    });
   }
 
   handleInput(field) {
+    if (field === "activity") {
+    }
+
     return (event, data) => {
       this.setState({
         [field]: data.value
@@ -69,10 +91,24 @@ class AddActivity extends React.Component {
     };
   }
 
-  handleSubmit() {}
+  getActivityValue(activity) {}
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { activity, activityValue } = this.state;
+    const { currentUser } = this.props;
+    const date = new Date(); // change format for reef needs
+    socket.emit("karma-activity", {
+      currentUser,
+      activity,
+      activityValue,
+      date
+    });
+  }
 
   render() {
-    const { category } = this.state;
+    const { category, activity } = this.state;
+
     const ACTIVITIES =
       category === "socialWelfare"
         ? socialWelfareActivities
@@ -84,7 +120,7 @@ class AddActivity extends React.Component {
       <Modal trigger={<Icon name="plus" />}>
         <Modal.Header>Add an Activity</Modal.Header>
         <Modal.Content>
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <Form.Input
               control={Dropdown}
               options={CATEGORIES}
@@ -94,15 +130,22 @@ class AddActivity extends React.Component {
               onChange={this.handleInput("category")}
               placeholder="Category"
             />
-
             <Form.Input
               control={Dropdown}
               options={ACTIVITIES}
+              disabled={!category}
               search
               selection
-              value={category}
+              value={activity}
               onChange={this.handleInput("activity")}
               placeholder="Activity"
+            />
+            <Form.Button
+              className={css(styles.activitySendButton)}
+              content="Send"
+              disabled={!category || !activity}
+              icon="send"
+              primary
             />
           </Form>
         </Modal.Content>
@@ -110,5 +153,11 @@ class AddActivity extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  activitySendButton: {
+    display: "grid"
+  }
+});
 
 export default AddActivity;

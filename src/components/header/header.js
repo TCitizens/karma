@@ -64,9 +64,6 @@ class MainHeader extends React.Component {
           <div className={css(styles.headerTitle)}>
             <span className={css(styles.headerTitleManagement)}>Karma</span>
           </div>
-
-          <AddActivity />
-
           <div className={css(styles.headerUserContainer)}>
             <div className={css(styles.headerUser)}>
               <Image src={avatar} avatar />
