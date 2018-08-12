@@ -32,35 +32,35 @@ export function configureStore(initialState = {}) {
     avatar: Snorlax,
     activityValue: 4,
     event_: 'fed a person in need',
-     date: 'Saturday, August 12'
+     date: '2018-08-09'
   }
   let activity2 = {
     username: 'alice',
     avatar: Pikachu,
     activityValue: 50,
     event_: 'donated to a social cause',
-    date: 'Saturday, August 11'
+    date: '2018-08-05'
   }
   let activity3 = {
     username: 'ken',
     avatar: Bullbasaur,
     activityValue: 20,
     event_: 'donated to a social cause',
-    date: 'Sunday, August 12'
+    date: '2018-08-06'
   }
   let activity4 = {
     username: 'ken',
     avatar: Bullbasaur,
     activityValue: 15,
     event_: 'provided mentorship',
-    date: 'Sunday, August 10'
+    date: '2018-08-01'
   }
   let activity5 = {
     username: 'ken',
     avatar: Bullbasaur,
     activityValue: 3,
     event_: 'payed it forward',
-    date: 'Sunday, August 10'
+    date: '2018-08-02'
   }
   initialState = {
     activities: [activity1, activity2, activity3, activity4, activity5],

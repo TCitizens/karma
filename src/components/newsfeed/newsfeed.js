@@ -9,26 +9,36 @@ import { StyleSheet, css } from 'aphrodite';
 import {Feed} from 'semantic-ui-react';
 
 class NewsFeed extends React.Component {
-  state = {
-    activities: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activities: this.props.activities
+    }
+  }
   componentDidMount() {
     const socket = io(WEBSOCKET_SERVER);
     socket.on("karma-activity", this.processActivities);
   }
 
   processActivities = activity => {
-    //TO BE FILLED IN
-    // this.setState({activities: [...this.state.activities, activity]})
+    let formattedDate = this.formatDate(activity.date);
     let newActivity = {
-      username: this.props.currentUser.username,
-      avatar: this.props.currentUser.avatar,
+      username: activity.currentUser.username,
+      avatar: this.getAvatar(activity.currentUser.username),
       activityValue: activity.activityValue,
       event_: activity.activity,
-      date: activity.date
+      date: formattedDate
     }
-    this.props.postNewActivity(newActivity);
-    console.log("this is an activity", activity);
+    this.setState({ activities: [...this.state.activities, newActivity] });
+  };
+
+  getAvatar = username => {
+    const avatars = {
+      bob: Snorlax,
+      alice: Pikachu,
+      ken: Bullbasaur
+    };
+    return avatars[username];
   };
 
   sortDate = activities => {
@@ -41,9 +51,22 @@ class NewsFeed extends React.Component {
     return sortedActivities;
   }
 
+  formatDate = date => {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
   render() {
     const {currentUser} = this.props;
-    const activities = this.props.activities.map(activity => {
+    const { activities } = this.state;
+    const mappedActivities = activities.map(activity => {
       return {
         username: activity.username,
         avatar: activity.avatar,
@@ -52,7 +75,7 @@ class NewsFeed extends React.Component {
         date: activity.date
       };
     })
-    const sortedActivities = this.sortDate(activities);
+    const sortedActivities = this.sortDate(mappedActivities);
     return (
       <div className={css(styles.newsFeedContainer)}>
         <div className={css(styles.newsFeedTitle)}>
@@ -72,7 +95,7 @@ class NewsFeed extends React.Component {
             </Feed>
           })
         }
-        <AddActivity username={currentUser}/>
+        <AddActivity currentUser={currentUser}/>
       </div>
     )
   }
