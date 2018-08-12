@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Header,
-  Dropdown,
-  Image,
-  Modal,
-  Icon,
-  Form
-} from "semantic-ui-react";
-import { isObject } from "util";
+import { Dropdown, Modal, Button, Icon, Form } from "semantic-ui-react";
 import { WEBSOCKET_SERVER } from "../../util/socket";
 import io from "socket.io-client";
 import { StyleSheet, css } from "aphrodite";
@@ -56,57 +47,77 @@ const charityActivities = [
   }
 ];
 
+const activityValues = {
+  religousConvene: 20,
+  shelter: 20,
+  reliefEfforts: 30,
+  mentorship: 15,
+  cleanCommunity: 10,
+  pickUpLitter: 1,
+  giveUpSeat: 2,
+  payItForward: 3,
+  feedAPerson: 4,
+  giveComplement: 1,
+  donateReligousGroup: 50,
+  donateSocialCause: 50
+};
+
 class AddActivity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       category: "",
       activity: "",
-      activityValue: 0
+      activityValue: 0,
+      showModal: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
-  processActivities() {}
-
-  componentWillUnmount() {
+  resetState() {
     this.setState({
       category: "",
-      activity: ""
+      activity: "",
+      activityValue: 0,
+      showModal: false
     });
   }
 
   handleInput(field) {
-    if (field === "activity") {
-    }
-
+    let activityVal = 0;
     return (event, data) => {
+      if (field === "activity") {
+        activityVal = activityValues[data.value];
+      }
+
       this.setState({
-        [field]: data.value
+        [field]: data.value,
+        activityValue: activityVal
       });
     };
   }
-
-  getActivityValue(activity) {}
 
   handleSubmit(event) {
     event.preventDefault();
     const { activity, activityValue } = this.state;
     const { currentUser } = this.props;
-    const date = new Date(); // change format for reef needs
+    const date = new Date();
     const socket = io(WEBSOCKET_SERVER);
+
     socket.emit("karma-activity", {
       currentUser,
       activity,
       activityValue,
       date
     });
+
+    this.resetState();
   }
 
   render() {
-    const { category, activity } = this.state;
-
+    const { category, activity, showModal } = this.state;
     const ACTIVITIES =
       category === "socialWelfare"
         ? socialWelfareActivities
@@ -115,7 +126,19 @@ class AddActivity extends React.Component {
           : charityActivities;
 
     return (
-      <Modal trigger={<Icon name="plus" />}>
+      <Modal
+        trigger={
+          <Button
+            icon
+            className={css(styles.plusIconButton)}
+            onClick={() => this.setState({ showModal: true })}
+          >
+            <Icon name="plus" size="big" />
+          </Button>
+        }
+        onClose={this.resetState}
+        open={showModal}
+      >
         <Modal.Header>Add an Activity</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
@@ -155,6 +178,12 @@ class AddActivity extends React.Component {
 const styles = StyleSheet.create({
   activitySendButton: {
     display: "grid"
+  },
+  plusIconButton: {
+    position: "fixed",
+    right: "40px",
+    bottom: "50px",
+    height: "50px"
   }
 });
 
