@@ -2,12 +2,46 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
-import Navigation from '../navigation/navigation'
+import { Icon, Dropdown, Image } from 'semantic-ui-react';
+import { selectCurrentUser } from '../../actions/currentUserActions';
+import Navigation from '../navigation/navigation';
+import Snorlax from '../../assets/snorlax.png';
+import Pikachu from '../../assets/pikachu.png';
+import Bullbasaur from '../../assets/bullbasaur.png';
 
 
 class MainHeader extends React.Component {
+  state = {
+    username: 'bob',
+    avatar: Snorlax
+  }
+
+  handleSelect = (event, {name, value}) => {
+    const { selectCurrentUser } = this.props;
+    this.setState({ [name]: value , avatar: this.getAvatar(value) }, () => selectCurrentUser({...this.state}))
+  }
+
+  getUserOptions = () => {
+    return [
+      { key: 'bob', text: 'Bob', value: 'bob', image: { avatar: true, src: Snorlax }},
+      { key: 'alice', text: 'Alice', value: 'alice', image: { avatar: true, src: Pikachu }},
+      { key: 'ken', text: 'Ken', value: 'ken', image: { avatar: true, src: Bullbasaur }}
+    ]
+  }
+
+  getAvatar = username => {
+    const avatars = {
+      'bob': Snorlax,
+      'alice': Pikachu,
+      'ken': Bullbasaur
+    }
+    return avatars[username];
+  }
+
   render() {
     const { children } = this.props;
+    const { avatar, username } = this.state;
+    const userOptions = this.getUserOptions();
     return (
       <div>
         <div className={css(styles.headerContainer)}>
@@ -16,7 +50,16 @@ class MainHeader extends React.Component {
           </div>
           <div className={css(styles.headerUserContainer)}>
             <div className={css(styles.headerUser)}>
-              USER
+              <Image src={avatar} avatar/>
+              <Dropdown
+                selection
+                placeholder='Select User'
+                name='username'
+                value={username}
+                options={userOptions}
+                onChange={this.handleSelect}
+                className={css(styles.headerUserSelection)}
+              />
             </div>
           </div>
         </div>
@@ -34,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottom: '1px solid #C4C4C4',
-    height: '41px'
+    height: '49px'
   },
   headerTitle: {
     fontSize: '24px',
@@ -49,7 +92,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     minHeight: '100%',
     justifyContent: 'space-between',
-    width: '250px'
+    width: '125px'
   },
   headerUser: {
     display: 'flex',
@@ -59,16 +102,25 @@ const styles = StyleSheet.create({
     color: '#01b4c0',
     fontSize: '18px'
   },
+  headerUserSelection: {
+    marginLeft: '25px',
+  },
   childrenContainer: {
-    height: 'calc(100vh - 41px)',
+    height: 'calc(100vh - 49px)',
     overflowX: 'hidden'
   }
 });
 
-const mapStateToProps = () => {
+const mapStateToProps = ({currentUser}) => {
+  return({
+    currentUser: currentUser
+  })
 }
 
 const mapDispatchToProps = dispatch => {
+  return({
+    selectCurrentUser: currentUser => dispatch(selectCurrentUser(currentUser))
+  })
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainHeader));
