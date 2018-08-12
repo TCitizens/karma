@@ -65,15 +65,9 @@ export function configureStore(initialState = {}) {
   initialState = {
     activities: [activity1, activity2, activity3, activity4, activity5],
     total: {
-      bob: {
-        points: 100
-      },
-      alice: {
-        points: 200
-      },
-      ken: {
-        points: 150
-      }
+      bob: 100,
+      alice: 200,
+      ken: 150
     }
   }
 
