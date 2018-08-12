@@ -79,6 +79,7 @@ class NewsFeed extends React.Component {
     const sortedActivities = this.sortDate(mappedActivities);
     return (
       <div className={css(styles.newsFeedContainer)}>
+        <Banner />
         <div className={css(styles.newsFeedTitle)}>
           NEWSFEED
         </div>
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
   newsFeedTitle: {
     color: "#01b4c0",
     fontWeight: '700',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    marginTop: '25px'
   }
 })
 
