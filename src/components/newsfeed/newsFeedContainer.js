@@ -6,7 +6,7 @@ import {postNewActivity} from '../../actions/activityActions';
 const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
-    activites: state.activities
+    activities: state.activities
   }
 }
 

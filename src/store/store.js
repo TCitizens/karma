@@ -31,25 +31,39 @@ export function configureStore(initialState = {}) {
     username: 'bob',
     avatar: Snorlax,
     activityValue: 4,
-    event_: 'Bob fed a person in need',
-    date: '7:00 Saturday, August 11'
+    event_: 'fed a person in need',
+     date: 'Saturday, August 12'
   }
   let activity2 = {
     username: 'alice',
     avatar: Pikachu,
     activityValue: 50,
-    event_: 'Alice donated to a social cause',
-    date: '8:00 Saturday, August 11'
+    event_: 'donated to a social cause',
+    date: 'Saturday, August 11'
   }
   let activity3 = {
     username: 'ken',
     avatar: Bullbasaur,
     activityValue: 20,
-    event_: 'ken donated to a social cause',
-    date: '9:00 Sunday, August 12'
+    event_: 'donated to a social cause',
+    date: 'Sunday, August 12'
+  }
+  let activity4 = {
+    username: 'ken',
+    avatar: Bullbasaur,
+    activityValue: 15,
+    event_: 'provided mentorship',
+    date: 'Sunday, August 10'
+  }
+  let activity5 = {
+    username: 'ken',
+    avatar: Bullbasaur,
+    activityValue: 3,
+    event_: 'payed it forward',
+    date: 'Sunday, August 10'
   }
   initialState = {
-    activities: [activity1, activity2, activity3],
+    activities: [activity1, activity2, activity3, activity4, activity5],
     total: {
       bob: {
         points: 100

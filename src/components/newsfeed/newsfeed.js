@@ -20,17 +20,26 @@ class NewsFeed extends React.Component {
   processActivities = activity => {
     //TO BE FILLED IN
     // this.setState({activities: [...this.state.activities, activity]})
-    debugger
     let newActivity = {
-      username: this.props.currentUser,
-      avatar: '',
+      username: this.props.currentUser.username,
+      avatar: this.props.currentUser.avatar,
       activityValue: activity.activityValue,
       event_: activity.activity,
-      date: '7:00 Saturday, August 11'
+      date: activity.date
     }
     this.props.postNewActivity(newActivity);
     console.log("this is an activity", activity);
   };
+
+  sortDate = activities => {
+    let sortedActivities = activities.sort((first, second) => {
+      let a = new Date(first['date']);
+      let b = new Date(second['date']);
+      return a > b ? -1 : a < b ? 1 : 0
+    })
+
+    return sortedActivities;
+  }
 
   render() {
     const {currentUser} = this.props;
@@ -39,14 +48,30 @@ class NewsFeed extends React.Component {
         username: activity.username,
         avatar: activity.avatar,
         activityValue: activity.activityValue,
-        event_: activity.event,
+        event_: activity.event_,
         date: activity.date
       };
-  })
+    })
+    const sortedActivities = this.sortDate(activities);
     return (
       <div className={css(styles.newsFeedContainer)}>
-        ----NEWSFEED----
-        <Feed events={activities} />
+        <div className={css(styles.newsFeedTitle)}>
+          NEWSFEED
+        </div>
+        {
+          sortedActivities.map((activity, index) => {
+            let formattedText = `${activity.username} ${activity.event_} on ${activity.date}: +${activity.activityValue}`;
+            return <Feed key={index}>
+              <Feed.Event>
+                <Feed.Label image={activity.avatar}/>
+                <Feed.Content>
+                  <Feed.Date content={activity.date}/>
+                  <Feed.Summary content={formattedText}/>
+                </Feed.Content>
+              </Feed.Event>
+            </Feed>
+          })
+        }
         <AddActivity username={currentUser}/>
       </div>
     )
@@ -56,6 +81,11 @@ class NewsFeed extends React.Component {
 const styles = StyleSheet.create({
   newsFeedContainer: {
     marginLeft: '100px'
+  },
+  newsFeedTitle: {
+    color: "#01b4c0",
+    fontWeight: '700',
+    marginBottom: '25px'
   }
 })
 
