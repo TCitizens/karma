@@ -5,7 +5,27 @@ import Snorlax from '../../assets/snorlax.png'
 import Pikachu from '../../assets/pikachu.png'
 import { StyleSheet, css } from 'aphrodite';
 
+
+
 class NewsFeed extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {activities: []}
+  }
+  // state = {
+  //   activities: []
+  // }
+  componentDidMount() {
+    const socket = io(WEBSOCKET_SERVER);
+    socket.on("karma-activity", this.processActivities);
+  }
+
+  processActivities = activity =>  {
+    //TO BE FILLED IN
+    // this.setState({activities: [...this.state.activities, activity]})
+    console.log('this is an activity', activity)
+  }
 
   render() {
     const {currentUser, activities} = this.props;
@@ -44,6 +64,7 @@ class NewsFeed extends React.Component {
       <div className={css(styles.newsFeedContainer)}>
         ----NEWSFEED----
         <Feed events={events} />
+        <AddActivity />
       </div>
     )
   }
@@ -56,7 +77,7 @@ const styles = StyleSheet.create({
 })
 
 export default NewsFeed;
-// const activities = this.props.activites.map(activity => {
+// const activities = this.props.activities.map(activity => {
 //     username: {activity.username},
 //     avatar: {activity.avatar},
 //     additionalPoints = {activity.additionalPoints},
